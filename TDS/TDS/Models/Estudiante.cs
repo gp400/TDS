@@ -11,6 +11,7 @@ namespace TDS.Models
             EstudiantesClases = new HashSet<EstudiantesClase>();
             Mensajes = new HashSet<Mensaje>();
             MensajesDetalles = new HashSet<MensajesDetalle>();
+            Usuarios = new HashSet<Usuario>();
         }
 
         public int Id { get; set; }
@@ -28,5 +29,6 @@ namespace TDS.Models
         public virtual ICollection<EstudiantesClase> EstudiantesClases { get; set; }
         public virtual ICollection<Mensaje> Mensajes { get; set; }
         public virtual ICollection<MensajesDetalle> MensajesDetalles { get; set; }
+        public virtual ICollection<Usuario> Usuarios { get; set; }
     }
 }

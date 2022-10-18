@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\GabrielPeña\\Downloads\\TDS\\TDS\\TDS.csproj": {}
+    "D:\\Users\\gabri\\source\\repos\\TDS\\TDS\\TDS.csproj": {}
   },
   "projects": {
-    "C:\\Users\\GabrielPeña\\Downloads\\TDS\\TDS\\TDS.csproj": {
+    "D:\\Users\\gabri\\source\\repos\\TDS\\TDS\\TDS.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\GabrielPeña\\Downloads\\TDS\\TDS\\TDS.csproj",
+        "projectUniqueName": "D:\\Users\\gabri\\source\\repos\\TDS\\TDS\\TDS.csproj",
         "projectName": "TDS",
-        "projectPath": "C:\\Users\\GabrielPeña\\Downloads\\TDS\\TDS\\TDS.csproj",
-        "packagesPath": "C:\\Users\\GabrielPeña\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\GabrielPeña\\Downloads\\TDS\\TDS\\obj\\",
+        "projectPath": "D:\\Users\\gabri\\source\\repos\\TDS\\TDS\\TDS.csproj",
+        "packagesPath": "C:\\Users\\gabri\\.nuget\\packages\\",
+        "outputPath": "D:\\Users\\gabri\\source\\repos\\TDS\\TDS\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\GabrielPeña\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\gabri\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -83,7 +87,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
         }
       }
     }

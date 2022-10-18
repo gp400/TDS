@@ -24,7 +24,9 @@ namespace TDS.Models
         public virtual DbSet<Maestro> Maestros { get; set; } = null!;
         public virtual DbSet<Mensaje> Mensajes { get; set; } = null!;
         public virtual DbSet<MensajesDetalle> MensajesDetalles { get; set; } = null!;
+        public virtual DbSet<Rol> Rols { get; set; } = null!;
         public virtual DbSet<Tarea> Tareas { get; set; } = null!;
+        public virtual DbSet<Usuario> Usuarios { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -260,6 +262,25 @@ namespace TDS.Models
                     .HasConstraintName("FK__MensajesD__Mensa__440B1D61");
             });
 
+            modelBuilder.Entity<Rol>(entity =>
+            {
+                entity.ToTable("Rol");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Descripcion)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("descripcion");
+
+                entity.Property(e => e.Estado).HasColumnName("estado");
+
+                entity.Property(e => e.Nombre)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("nombre");
+            });
+
             modelBuilder.Entity<Tarea>(entity =>
             {
                 entity.ToTable("Tarea");
@@ -285,6 +306,38 @@ namespace TDS.Models
                     .WithMany(p => p.Tareas)
                     .HasForeignKey(d => d.IdClase)
                     .HasConstraintName("FK__Tarea__idClase__46E78A0C");
+            });
+
+            modelBuilder.Entity<Usuario>(entity =>
+            {
+                entity.ToTable("Usuario");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Email)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("email");
+
+                entity.Property(e => e.Password)
+                    .HasMaxLength(400)
+                    .IsUnicode(false)
+                    .HasColumnName("password");
+
+                entity.HasOne(d => d.Estudiante)
+                    .WithMany(p => p.Usuarios)
+                    .HasForeignKey(d => d.EstudianteId)
+                    .HasConstraintName("FK__Usuario__Estudia__74AE54BC");
+
+                entity.HasOne(d => d.Maestro)
+                    .WithMany(p => p.Usuarios)
+                    .HasForeignKey(d => d.MaestroId)
+                    .HasConstraintName("FK__Usuario__Maestro__75A278F5");
+
+                entity.HasOne(d => d.Rol)
+                    .WithMany(p => p.Usuarios)
+                    .HasForeignKey(d => d.RolId)
+                    .HasConstraintName("FK__Usuario__RolId__76969D2E");
             });
 
             OnModelCreatingPartial(modelBuilder);
