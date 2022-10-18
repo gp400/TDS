@@ -8,6 +8,7 @@ namespace TDS.Models
         public Maestro()
         {
             Clases = new HashSet<Clase>();
+            Usuarios = new HashSet<Usuario>();
         }
 
         public int Id { get; set; }
@@ -22,5 +23,6 @@ namespace TDS.Models
 
         public virtual Institucion? Institucion { get; set; }
         public virtual ICollection<Clase> Clases { get; set; }
+        public virtual ICollection<Usuario> Usuarios { get; set; }
     }
 }
