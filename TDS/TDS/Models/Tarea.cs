@@ -17,6 +17,7 @@ namespace TDS.Models
         public int? IdClase { get; set; }
         public bool? Estado { get; set; }
         public string? Codigo { get; set; }
+        public int? Calificacion { get; set; }
 
         public virtual Clase? IdClaseNavigation { get; set; }
         public virtual ICollection<Entrega> Entregas { get; set; }

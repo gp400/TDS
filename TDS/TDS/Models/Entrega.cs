@@ -10,6 +10,7 @@ namespace TDS.Models
         public int? TareaId { get; set; }
         public int? EstudianteId { get; set; }
         public bool? Estado { get; set; }
+        public int? Calificacion { get; set; }
 
         public virtual Estudiante? Estudiante { get; set; }
         public virtual Tarea? Tarea { get; set; }

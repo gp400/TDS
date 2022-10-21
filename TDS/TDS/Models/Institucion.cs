@@ -10,6 +10,7 @@ namespace TDS.Models
             Clases = new HashSet<Clase>();
             Estudiantes = new HashSet<Estudiante>();
             Maestros = new HashSet<Maestro>();
+            Usuarios = new HashSet<Usuario>();
         }
 
         public int Id { get; set; }
@@ -25,5 +26,6 @@ namespace TDS.Models
         public virtual ICollection<Clase> Clases { get; set; }
         public virtual ICollection<Estudiante> Estudiantes { get; set; }
         public virtual ICollection<Maestro> Maestros { get; set; }
+        public virtual ICollection<Usuario> Usuarios { get; set; }
     }
 }

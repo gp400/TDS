@@ -81,6 +81,7 @@ namespace TDS.Controllers
                 oldEntrega.Documento = entrega.Documento;
                 oldEntrega.EstudianteId = entrega.EstudianteId;
                 oldEntrega.TareaId = entrega.TareaId;
+                oldEntrega.Calificacion = entrega.Calificacion;
                 await _context.SaveChangesAsync();
                 return Ok(oldEntrega);
             }

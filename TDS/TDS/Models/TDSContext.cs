@@ -319,6 +319,8 @@ namespace TDS.Models
                     .IsUnicode(false)
                     .HasColumnName("email");
 
+                entity.Property(e => e.Estado).HasColumnName("estado");
+
                 entity.Property(e => e.Password)
                     .HasMaxLength(400)
                     .IsUnicode(false)
@@ -328,6 +330,11 @@ namespace TDS.Models
                     .WithMany(p => p.Usuarios)
                     .HasForeignKey(d => d.EstudianteId)
                     .HasConstraintName("FK__Usuario__Estudia__74AE54BC");
+
+                entity.HasOne(d => d.Institucion)
+                    .WithMany(p => p.Usuarios)
+                    .HasForeignKey(d => d.InstitucionId)
+                    .HasConstraintName("FK__Usuario__Institu__01142BA1");
 
                 entity.HasOne(d => d.Maestro)
                     .WithMany(p => p.Usuarios)

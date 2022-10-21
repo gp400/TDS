@@ -16,7 +16,7 @@ namespace TDS.Controllers
         }
 
         [HttpGet("GetTareas/{idClase}")]
-        public async Task<IActionResult> GetMaestros(int idClase)
+        public async Task<IActionResult> GetTareas(int idClase)
         {
             try
             {
@@ -101,6 +101,7 @@ namespace TDS.Controllers
                 oldTarea.FechaEntrega = tarea.FechaEntrega;
                 oldTarea.IdClase = tarea.IdClase;
                 oldTarea.Titulo = tarea.Titulo;
+                oldTarea.Calificacion = tarea.Calificacion;
                 await _context.SaveChangesAsync();
                 return Ok(oldTarea);
             }
