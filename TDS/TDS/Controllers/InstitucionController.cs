@@ -51,7 +51,7 @@ namespace TDS.Controllers
         {
             try
             {
-                var institucion = await _context.Institucions.AsNoTracking().FirstOrDefaultAsync(x => x.Codigo == codigo && x.Estado == true);
+                var institucion = await _context.Institucions.AsNoTracking().FirstOrDefaultAsync(x => x.Codigo.ToLower() == codigo.ToLower() && x.Estado == true);
                 if (institucion == null)
                 {
                     return NotFound("No existe esa institucion");
