@@ -1,0 +1,20 @@
+<main class="container">
+  <div class="card center-layout w-75">
+    <div class="card-body">
+      <h4 class="card-title text-center">Inicie Sesion con su Institucion</h4>
+      <ng-template ngFor let-error [ngForOf]="errores">
+        <p class="alert alert-danger" role="alert">{{error}}</p>
+      </ng-template>
+      <form class="row" (ngSubmit)="onSubmit()" #formRegistro="ngForm" novalidate>
+        <div class="mb-3 col">
+          <label for="codigo" class="form-label">Codigo</label>
+          <input type="text" [(ngModel)]="institucion.codigo" name="codigo" class="form-control" id="codigo" required>
+        </div>
+        <div class="mb-3 col-12 d-flex justify-content-between">
+          <input type="submit" value="Iniciar Sesion" class="btn btn-primary">
+          <a routerLink="/institucion/registro" class="btn btn-success">Cree una institucion</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</main>

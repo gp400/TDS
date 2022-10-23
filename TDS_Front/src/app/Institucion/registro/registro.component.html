@@ -1,0 +1,40 @@
+<main class="container">
+  <div class="card center-layout w-75">
+    <div class="card-body">
+      <h4 class="card-title text-center">Registre su institucion</h4>
+      <ng-template ngFor let-error [ngForOf]="errores">
+        <p class="alert alert-danger" role="alert">{{error}}</p>
+      </ng-template>
+      <form class="row needs-validation" (ngSubmit)="onSubmit()" #formRegistro="ngForm" novalidate>
+        <div class="mb-3 col-md-6">
+          <label for="nombre" class="form-label">Nombre</label>
+          <input type="text" [(ngModel)]="institucion.nombre" name="nombre" class="form-control" id="nombre" required>
+        </div>
+        <div class="mb-3 col-md-6">
+          <label for="descripcion" class="form-label">Descripcion</label>
+          <input type="text" [(ngModel)]="institucion.descripcion" name="descripcion" class="form-control" id="descripcion">
+        </div>
+        <div class="mb-3 col-md-6">
+          <label for="codigo" class="form-label">Codigo</label>
+          <input type="text" [(ngModel)]="institucion.codigo" name="codigo" class="form-control" id="codigo" required>
+        </div>
+        <div class="mb-3 col-md-6">
+          <label for="direccion" class="form-label">Direccion</label>
+          <input type="text" [(ngModel)]="institucion.direccion" name="direccion" class="form-control" id="direccion">
+        </div>
+        <div class="mb-3 col-md-6">
+          <label for="correo" class="form-label">Correo</label>
+          <input type="text" [(ngModel)]="institucion.correo" name="correo" class="form-control" id="correo">
+        </div>
+        <div class="mb-3 col-md-6">
+          <label for="telefono" class="form-label">Telefono</label>
+          <input type="text" [(ngModel)]="institucion.telefono" name="telefono" class="form-control" id="telefono">
+        </div>
+        <div class="mb-3 col-12 d-flex justify-content-between">
+          <input type="submit" value="Registrar" class="btn btn-primary">
+          <a routerLink="/institucion/login" class="btn btn-success">Inicie Sesion</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</main>
