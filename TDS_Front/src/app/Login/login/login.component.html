@@ -1,0 +1,20 @@
+<main class="container">
+  <div class="card center-layout w-75">
+    <div class="card-body">
+      <h4 class="card-title text-center">Inicie Sesion</h4>
+      <form class="row" (ngSubmit)="onSubmit()" #formRegistro="ngForm" novalidate>
+        <div class="mb-3">
+          <label for="correo" class="form-label">Correo</label>
+          <input type="email" [(ngModel)]="email" name="correo" class="form-control" id="correo">
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Contraseña</label>
+          <input type="password" [(ngModel)]="password" name="password" class="form-control" id="password">
+        </div>
+        <div class="mb-3">
+          <input type="submit" value="Iniciar Sesion" class="btn btn-primary">
+        </div>
+      </form>
+    </div>
+  </div>
+</main>

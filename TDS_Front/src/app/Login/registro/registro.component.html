@@ -1,0 +1,50 @@
+<app-navbar></app-navbar>
+<main class="container">
+  <h1 class="text-center my-3">{{title}}</h1>
+  <a routerLink="/usuario" class="btn btn-primary mb-3">Volver</a>
+  <ng-template ngFor let-error [ngForOf]="errores">
+    <p class="alert alert-danger" role="alert">{{error}}</p>
+  </ng-template>
+  <form (ngSubmit)="onSubmit()" #formRegistro="ngForm" novalidate>
+    <div class="mb-3">
+      <label for="password" class="form-label">Contraseña</label>
+      <input type="password" [(ngModel)]="usuario.password" name="password" class="form-control" id="password">
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Tipo</label>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="maestro" [(ngModel)]="radio" value="maestro" id="maestro">
+        <label class="form-check-label" for="maestro">
+          Maestro
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="maestro" [(ngModel)]="radio" value="estudiante" id="estudiante">
+        <label class="form-check-label" for="estudiante">
+          Estudiante
+        </label>
+      </div>
+    </div>
+    <div class="mb-3">
+      <ng-template [ngIf]="radio == 'estudiante'">
+        <label for="estudiantes" class="form-label">Estudiantes</label>
+        <select class="form-select" [(ngModel)]="usuario.estudianteId" name="estudianteId">
+          <ng-template ngFor let-estudiante [ngForOf]="estudiantes">
+            <option value="{{estudiante.id}}">{{estudiante.nombres}} {{estudiante.apellidos}}</option>
+          </ng-template>
+        </select>
+      </ng-template>
+      <ng-template [ngIf]="radio == 'maestro'">
+        <label for="maestros" class="form-label">Maestros</label>
+        <select class="form-select" [(ngModel)]="usuario.maestroId" name="maestroId">
+          <ng-template ngFor let-maestro [ngForOf]="maestros">
+            <option value="{{maestro.id}}">{{maestro.nombres}} {{maestro.apellidos}}</option>
+          </ng-template>
+        </select>
+      </ng-template>
+    </div>
+    <div>
+      <input type="submit" value="{{btnText}}" class="btn btn-primary">
+    </div>
+  </form>
+</main>

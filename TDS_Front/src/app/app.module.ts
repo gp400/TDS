@@ -11,11 +11,18 @@ import { LoginComponent } from './Institucion/login/login.component';
 import { IndexComponent } from './Institucion/index/index.component';
 import { NavbarComponent } from './Institucion/navbar/navbar.component';
 import { LoginGuard } from './Institucion/auth/login.guard';
+import { RegistroComponent as UsuarioRegistro } from './Login/registro/registro.component'
+import { IndexComponent as UsuarioIndex } from './Login/index/index.component';
+import { LoginComponent as UsuarioLogin } from './Login/login/login.component';
 
 const routes: Routes = [
   { path: "institucion/registro", component: RegistroComponent },
   { path: "institucion/login", component: LoginComponent },
   { path: "institucion", component: IndexComponent, canActivate: [LoginGuard] },
+  { path: "usuario", component: UsuarioIndex, canActivate: [LoginGuard] },
+  { path: "usuario/registro", component: UsuarioRegistro, canActivate: [LoginGuard] },
+  { path: "usuario/registro/:id", component: UsuarioRegistro, canActivate: [LoginGuard] },
+  { path: "usuario/login", component: UsuarioLogin },
 ];
 
 @NgModule({
@@ -24,7 +31,10 @@ const routes: Routes = [
     RegistroComponent,
     LoginComponent,
     IndexComponent,
-    NavbarComponent
+    NavbarComponent,
+    UsuarioRegistro,
+    UsuarioIndex,
+    UsuarioLogin
   ],
   imports: [
     BrowserModule,

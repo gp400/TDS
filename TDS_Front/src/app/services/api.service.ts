@@ -1,6 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Estudiante } from '../models/estudiante';
 import { Institucion } from '../models/institucion';
+import { Maestro } from '../models/maestro';
+import { Usuario } from '../models/usuario';
 
 @Injectable({
   providedIn: 'root'
@@ -9,19 +12,9 @@ export class APIService {
 
   constructor(private http: HttpClient) { }
 
-  private convertToRequestInstitucion(institucion: Institucion){
-    let objeto = {
-      Id: 0,
-      Nombre: institucion.nombre,
-      Descripcion: institucion.descripcion,
-      Codigo: institucion.codigo,
-      Direccion: institucion.direccion,
-      Correo: institucion.correo,
-      Telefono: institucion.telefono,
-      Licencias: institucion.licencias,
-      Estado: true
-    }
-    return objeto;
+  private getInstitucionId(){
+    let institucion: Institucion = JSON.parse(localStorage.getItem("institucion")||"") as Institucion;
+    return institucion.id;
   }
 
   public getInstitucionByCodigo(codigo: string){
@@ -29,6 +22,44 @@ export class APIService {
   }
 
   public insertInstitucion(institucion: Institucion){
-    return this.http.post<Institucion>("https://localhost:7082/Institucion/InsertInstitucion", this.convertToRequestInstitucion(institucion));
+    return this.http.post<Institucion>("https://localhost:7082/Institucion/InsertInstitucion", institucion);
+  }
+
+  public getMaestros(){
+    return this.http.get<Maestro[]>(`https://localhost:7082/Maestro/GetMaestros/${this.getInstitucionId()}`);
+  }
+
+  public getEstudiantes(){
+    return this.http.get<Estudiante[]>(`https://localhost:7082/Estudiantes/GetEstudiantes/${this.getInstitucionId()}`);
+  }
+
+  public login(correo: string, password: string){
+    return this.http.get<Usuario>(`https://localhost:7082/Usuario/Login/${correo}/${password}`);
+  }
+
+  public getUsuarios(){
+    return this.http.get<Usuario[]>(`https://localhost:7082/Usuario/GetUsuarios/${this.getInstitucionId()}`);
+  }
+
+  public getUsuarioById(id: number){
+    return this.http.get<Usuario>(`https://localhost:7082/Usuario/GetUsuarioById/${this.getInstitucionId()}/${id}`);
+  }
+
+  public insertUsuario(usuario: Usuario){
+    usuario.institucionId = this.getInstitucionId();
+    usuario.estudiante = null;
+    usuario.maestro = null;
+    return this.http.post<Usuario>(`https://localhost:7082/Usuario/InsertUsuario`, usuario);
+  }
+
+  public updateUsuario(usuario: Usuario){
+    usuario.institucionId = this.getInstitucionId();
+    usuario.estudiante = null;
+    usuario.maestro = null;
+    return this.http.put<Usuario>(`https://localhost:7082/Usuario/UpdateUsuario`, usuario);
+  }
+
+  public deleteUsuario(id: number){
+    return this.http.delete<Usuario>(`https://localhost:7082/Usuario/DeleteUsuario/${this.getInstitucionId()}/${id}`);
   }
 }
