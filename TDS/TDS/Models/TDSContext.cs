@@ -314,11 +314,6 @@ namespace TDS.Models
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.Email)
-                    .HasMaxLength(200)
-                    .IsUnicode(false)
-                    .HasColumnName("email");
-
                 entity.Property(e => e.Estado).HasColumnName("estado");
 
                 entity.Property(e => e.Password)

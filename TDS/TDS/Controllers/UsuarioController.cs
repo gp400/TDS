@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography;
+using System.Text;
 using TDS.Models;
 
 namespace TDS.Controllers
@@ -20,7 +22,7 @@ namespace TDS.Controllers
         {
             try
             {
-                var usuarios = await _context.Usuarios.Where(x => x.Estado == true && x.InstitucionId == idInstitucion).AsNoTracking().ToListAsync();
+                var usuarios = await _context.Usuarios.Where(x => x.Estado == true && x.InstitucionId == idInstitucion).Include(x => x.Estudiante).Include(x => x.Maestro).AsNoTracking().ToListAsync();
                 return Ok(usuarios);
             }
             catch (Exception ex)
@@ -34,7 +36,7 @@ namespace TDS.Controllers
         {
             try
             {
-                var usuario = await _context.Usuarios.Where(x => x.Estado == true && x.InstitucionId == idInstitucion && x.Id == id).AsNoTracking().FirstOrDefaultAsync();
+                var usuario = await _context.Usuarios.Where(x => x.Estado == true && x.InstitucionId == idInstitucion && x.Id == id).Include(x => x.Estudiante).Include(x => x.Maestro).AsNoTracking().FirstOrDefaultAsync();
                 if (usuario == null)
                 {
                     return NotFound("No existe ese usuario");
@@ -53,6 +55,7 @@ namespace TDS.Controllers
             try
             {
                 usuario.Estado = true;
+                usuario.Password = this.HashPassword(usuario.Password);
                 await _context.Usuarios.AddAsync(usuario);
                 await _context.SaveChangesAsync();
                 return Ok(usuario);
@@ -74,8 +77,7 @@ namespace TDS.Controllers
                     return BadRequest($"Asegurese de que sea un usuario valido");
                 }
                 oldUsuario.Estado = true;
-                oldUsuario.Email = usuario.Email;
-                oldUsuario.Password = usuario.Password;
+                oldUsuario.Password = this.HashPassword(usuario.Password);
                 oldUsuario.EstudianteId = usuario.EstudianteId;
                 oldUsuario.MaestroId = usuario.MaestroId;
                 oldUsuario.RolId = usuario.RolId;
@@ -106,6 +108,47 @@ namespace TDS.Controllers
             {
                 return BadRequest(ex.Message);
             }
+        }
+
+        [HttpGet("Login/{correo}/{password}")]
+        public async Task<IActionResult> Login(string correo, string password)
+        {
+            try
+            {
+                var usuario = await _context.Usuarios.Include(x => x.Maestro).Where(x => x.Maestro != null).FirstOrDefaultAsync(x => x.Maestro.Correo == correo && this.HashPassword(password) == x.Password);
+                if (usuario == null)
+                {
+                    usuario = await _context.Usuarios.Include(x => x.Estudiante).Where(x => x.Estudiante != null).FirstOrDefaultAsync(x => x.Estudiante.Correo == correo && this.HashPassword(password) == x.Password);
+                    if (usuario != null)
+                    {
+                        return Ok(usuario);
+                    } else
+                    {
+                        return BadRequest("No existe ese usuario");
+                    }
+                } else
+                {
+                    return Ok(usuario);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [NonAction]
+        private string HashPassword(string password)
+        {
+            using var sha256 = SHA256.Create();
+            byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+
+            var sb = new StringBuilder();
+            for (int i = 0; i < bytes.Length; i++)
+            {
+                sb.Append(bytes[i].ToString("x2"));
+            }
+            return sb.ToString();
         }
     }
 }
