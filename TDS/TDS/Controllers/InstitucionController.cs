@@ -90,6 +90,10 @@ namespace TDS.Controllers
         {
             try
             {
+                if (await _context.Institucions.AnyAsync(x => x.Id != institucion.Id && x.Estado == true && x.Codigo == institucion.Codigo))
+                {
+                    return BadRequest($"Ya existe una institucion con codigo {institucion.Codigo}");
+                }
                 var oldInstitucion = await _context.Institucions.FirstOrDefaultAsync(x => x.Id == institucion.Id && x.Estado == true);
                 if (oldInstitucion == null)
                 {

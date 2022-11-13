@@ -34,7 +34,7 @@ namespace TDS.Controllers
         {
             try
             {
-                var clase = await _context.Estudiantes.Where(x => x.Estado == true && x.InstitucionId == idInstitucion && x.Id == id).AsNoTracking().FirstOrDefaultAsync();
+                var clase = await _context.Estudiantes.Where(x => x.Estado == true && x.InstitucionId == idInstitucion && x.Id == id).Include(x => x.EstudiantesClases).AsNoTracking().FirstOrDefaultAsync();
                 if (clase == null)
                 {
                     return NotFound("No existe ese estudiante");
@@ -52,7 +52,7 @@ namespace TDS.Controllers
         {
             try
             {
-                var clase = await _context.Estudiantes.Where(x => x.Estado == true && x.InstitucionId == idInstitucion && x.Codigo == codigo).AsNoTracking().FirstOrDefaultAsync();
+                var clase = await _context.Estudiantes.Where(x => x.Estado == true && x.InstitucionId == idInstitucion && x.Codigo == codigo).Include(x => x.EstudiantesClases).AsNoTracking().FirstOrDefaultAsync();
                 if (clase == null)
                 {
                     return NotFound("No existe ese estudiante");
@@ -139,17 +139,23 @@ namespace TDS.Controllers
         {
             try
             {
-                var oldEstudiante = await _context.Estudiantes.FirstOrDefaultAsync(x => x.Id == estudiante.Id && x.Estado == true && x.InstitucionId == estudiante.InstitucionId);
+                if (await _context.Estudiantes.AnyAsync(x => x.Id != estudiante.Id && x.Estado == true && x.InstitucionId == estudiante.InstitucionId && x.Codigo == estudiante.Codigo))
+                {
+                    return BadRequest($"Ya existe un estudiante con codigo {estudiante.Codigo}");
+                }
+                var oldEstudiante = await _context.Estudiantes.Include(x => x.EstudiantesClases).FirstOrDefaultAsync(x => x.Id == estudiante.Id && x.Estado == true && x.InstitucionId == estudiante.InstitucionId);
                 if (oldEstudiante == null)
                 {
                     return BadRequest($"Asegurese de que sea un estudiante valido");
                 }
+                _context.EstudiantesClases.RemoveRange(oldEstudiante.EstudiantesClases);
                 oldEstudiante.Apellidos = estudiante.Apellidos;
                 oldEstudiante.Codigo = estudiante.Codigo;
                 oldEstudiante.Correo = estudiante.Correo;
                 oldEstudiante.Direccion = estudiante.Direccion;
                 oldEstudiante.Nombres = estudiante.Nombres;
                 oldEstudiante.Telefono = estudiante.Telefono;
+                oldEstudiante.EstudiantesClases = estudiante.EstudiantesClases;
                 await _context.SaveChangesAsync();
                 return Ok(oldEstudiante);
             }
@@ -164,12 +170,16 @@ namespace TDS.Controllers
         {
             try
             {
-                var oldEstudiante = await _context.Estudiantes.FirstOrDefaultAsync(x => x.Id == id && x.Estado == true && x.InstitucionId == idInstitucion);
+                var oldEstudiante = await _context.Estudiantes.Include(x => x.Usuarios).FirstOrDefaultAsync(x => x.Id == id && x.Estado == true && x.InstitucionId == idInstitucion);
                 if (oldEstudiante == null)
                 {
                     return BadRequest($"Asegurese de que sea un maestro valido");
                 }
                 oldEstudiante.Estado = false;
+                foreach(var usuario in oldEstudiante.Usuarios)
+                {
+                    usuario.Estado = false;
+                }
                 await _context.SaveChangesAsync();
                 return Ok(oldEstudiante);
             }

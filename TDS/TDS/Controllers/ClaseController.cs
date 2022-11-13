@@ -108,6 +108,10 @@ namespace TDS.Controllers
         {
             try
             {
+                if (await _context.Clases.AnyAsync(x => x.Id != clase.Id && x.Estado == true && x.InstitucionId == clase.InstitucionId && x.Codigo == clase.Codigo))
+                {
+                    return BadRequest($"Ya existe una clase con codigo {clase.Codigo}");
+                }
                 var oldClase = await _context.Clases.FirstOrDefaultAsync(x => x.Id == clase.Id && x.Estado == true && x.InstitucionId == clase.InstitucionId);
                 if (oldClase == null)
                 {
@@ -117,6 +121,8 @@ namespace TDS.Controllers
                 oldClase.Descripcion = clase.Descripcion;
                 oldClase.MaestroId = clase.MaestroId;
                 oldClase.Nombre = clase.Nombre;
+                oldClase.FechaInicio = clase.FechaInicio;
+                oldClase.FechaFin = clase.FechaFin;
                 await _context.SaveChangesAsync();
                 return Ok(oldClase);
             }

@@ -77,6 +77,7 @@ namespace TDS.Controllers
                 oldMensajes.EstudianteId = mensaje.EstudianteId;
                 oldMensajes.Fecha = mensaje.Fecha;
                 oldMensajes.Texto = mensaje.Texto;
+                oldMensajes.MaestroId = mensaje.MaestroId;
                 await _context.SaveChangesAsync();
                 return Ok(oldMensajes);
             }
@@ -111,6 +112,7 @@ namespace TDS.Controllers
         {
             try
             {
+                mensajeDetalle.Estado = true;
                 await _context.MensajesDetalles.AddAsync(mensajeDetalle);
                 await _context.SaveChangesAsync();
                 return Ok(mensajeDetalle);
@@ -136,6 +138,7 @@ namespace TDS.Controllers
                 oldDetalle.Fecha = mensajeDetalle.Fecha;
                 oldDetalle.Texto = mensajeDetalle.Texto;
                 oldDetalle.MensajeId = mensajeDetalle.MensajeId;
+                oldDetalle.MaestroId = mensajeDetalle.MaestroId;
                 await _context.SaveChangesAsync();
                 return Ok(oldDetalle);
             }

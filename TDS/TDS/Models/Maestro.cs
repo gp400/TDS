@@ -8,6 +8,8 @@ namespace TDS.Models
         public Maestro()
         {
             Clases = new HashSet<Clase>();
+            Mensajes = new HashSet<Mensaje>();
+            MensajesDetalles = new HashSet<MensajesDetalle>();
             Usuarios = new HashSet<Usuario>();
         }
 
@@ -23,6 +25,8 @@ namespace TDS.Models
 
         public virtual Institucion? Institucion { get; set; }
         public virtual ICollection<Clase> Clases { get; set; }
+        public virtual ICollection<Mensaje> Mensajes { get; set; }
+        public virtual ICollection<MensajesDetalle> MensajesDetalles { get; set; }
         public virtual ICollection<Usuario> Usuarios { get; set; }
     }
 }

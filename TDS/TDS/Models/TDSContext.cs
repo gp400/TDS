@@ -54,6 +54,10 @@ namespace TDS.Models
 
                 entity.Property(e => e.Estado).HasColumnName("estado");
 
+                entity.Property(e => e.FechaFin).HasColumnType("datetime");
+
+                entity.Property(e => e.FechaInicio).HasColumnType("datetime");
+
                 entity.Property(e => e.Nombre)
                     .HasMaxLength(100)
                     .IsUnicode(false);
@@ -232,6 +236,11 @@ namespace TDS.Models
                     .WithMany(p => p.Mensajes)
                     .HasForeignKey(d => d.EstudianteId)
                     .HasConstraintName("FK__Mensajes__Estudi__3A81B327");
+
+                entity.HasOne(d => d.Maestro)
+                    .WithMany(p => p.Mensajes)
+                    .HasForeignKey(d => d.MaestroId)
+                    .HasConstraintName("FK__Mensajes__Maestr__14270015");
             });
 
             modelBuilder.Entity<MensajesDetalle>(entity =>
@@ -255,6 +264,11 @@ namespace TDS.Models
                     .WithMany(p => p.MensajesDetalles)
                     .HasForeignKey(d => d.EstudianteId)
                     .HasConstraintName("FK__MensajesD__Estud__4316F928");
+
+                entity.HasOne(d => d.Maestro)
+                    .WithMany(p => p.MensajesDetalles)
+                    .HasForeignKey(d => d.MaestroId)
+                    .HasConstraintName("FK__MensajesD__Maest__18EBB532");
 
                 entity.HasOne(d => d.Mensaje)
                     .WithMany(p => p.MensajesDetalles)
