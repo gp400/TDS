@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Clase } from '../models/clase';
 import { Estudiante } from '../models/estudiante';
 import { Institucion } from '../models/institucion';
 import { Maestro } from '../models/maestro';
@@ -31,6 +32,28 @@ export class APIService {
 
   public getEstudiantes(){
     return this.http.get<Estudiante[]>(`https://localhost:7082/Estudiantes/GetEstudiantes/${this.getInstitucionId()}`);
+  }
+
+  public getEstudianteById(id: number){
+    return this.http.get<Estudiante>(`https://localhost:7082/Estudiantes/GetEstudianteById/${this.getInstitucionId()}/${id}`);
+  }
+
+  public insertEstudiante(estudiante: Estudiante){
+    estudiante.institucionId = this.getInstitucionId();
+    return this.http.post<Estudiante>(`https://localhost:7082/Estudiantes/InsertEstudiante`, estudiante);
+  }
+
+  public updateEstudiante(estudiante: Estudiante){
+    estudiante.institucionId = this.getInstitucionId();
+    return this.http.put<Estudiante>(`https://localhost:7082/Estudiantes/UpdateEstudiante`, estudiante);
+  }
+
+  public deleteEstudiante(id: number){
+    return this.http.delete<Estudiante>(`https://localhost:7082/Estudiantes/DeleteEstudiante/${this.getInstitucionId()}/${id}`);
+  }
+
+  public getClases(){
+    return this.http.get<Clase[]>(`https://localhost:7082/Clase/GetClases/${this.getInstitucionId()}`);
   }
 
   public login(correo: string, password: string){

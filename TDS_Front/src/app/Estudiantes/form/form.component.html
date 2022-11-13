@@ -1,0 +1,68 @@
+<app-navbar></app-navbar>
+<main class="container">
+  <h1 class="text-center my-3">{{title}}</h1>
+  <a routerLink="/estudiantes" class="btn btn-primary my-3">Volver</a>
+  <ng-template ngFor let-error [ngForOf]="errores">
+    <p class="alert alert-danger" role="alert">{{error}}</p>
+  </ng-template>
+  <form (ngSubmit)="onSubmit()" #formRegistro="ngForm">
+    <div class="mb-3">
+      <label for="nombres" class="form-label">Nombres</label>
+      <input type="text" [(ngModel)]="estudiante.nombres" name="nombres" class="form-control" id="nombres">
+    </div>
+    <div class="mb-3">
+      <label for="apellidos" class="form-label">Apellidos</label>
+      <input type="text" [(ngModel)]="estudiante.apellidos" name="apellidos" class="form-control" id="apellidos">
+    </div>
+    <div class="mb-3">
+      <label for="correo" class="form-label">Correo</label>
+      <input type="email" [(ngModel)]="estudiante.correo" name="correo" class="form-control" id="correo">
+    </div>
+    <div class="mb-3">
+      <label for="codigo" class="form-label">Codigo</label>
+      <input type="text" [(ngModel)]="estudiante.codigo" name="codigo" class="form-control" id="codigo">
+    </div>
+    <div class="mb-3">
+      <label for="direccion" class="form-label">Direccion</label>
+      <input type="text" [(ngModel)]="estudiante.direccion" name="direccion" class="form-control" id="direccion">
+    </div>
+    <div class="mb-3">
+      <label for="telefono" class="form-label">Telefono</label>
+      <input type="tel" [(ngModel)]="estudiante.telefono" name="telefono" class="form-control" id="telefono">
+    </div>
+    <div class="mb-3">
+      <h4>Clases</h4>
+      <div class="d-flex">
+        <div class="flex-grow-1 me-2">
+          <select name="clases" class="form-select" id="clases" [(ngModel)]="idClase" name="clases">
+            <ng-template ngFor let-clase [ngForOf]="clasesValidas()">
+              <option value="{{clase.id}}">{{clase.nombre}}</option>
+            </ng-template>
+          </select>
+        </div>
+        <div>
+          <button type="button" class="btn btn-success" (click)="agregarClase()">Agregar</button>
+        </div>
+      </div>
+      <div *ngIf="estudiante.estudiantesClases.length != 0">
+        <table class="table table-hover mt-2">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th></th>
+            </tr>
+            <ng-template ngFor let-ec [ngForOf]="estudiante.estudiantesClases">
+              <tr>
+                <td>{{getClase(ec.claseId)?.nombre}}</td>
+                <td><button class="btn btn-danger" (click)="eliminarClase(ec.claseId)">Borrar</button></td>
+              </tr>
+            </ng-template>
+          </thead>
+        </table>
+      </div>
+    </div>
+    <div>
+      <input type="submit" value="Guardar" class="btn btn-primary mb-3">
+    </div>
+  </form>
+</main>

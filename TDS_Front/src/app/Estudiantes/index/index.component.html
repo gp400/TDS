@@ -1,0 +1,27 @@
+<app-navbar></app-navbar>
+<main class="container">
+  <h1 class="text-center my-3">Estudiantes</h1>
+  <a routerLink="/estudiantesForm" class="btn btn-primary my-3">Agregar estudiante</a>
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Correo</th>
+        <th>Codigo</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let estudiante of estudiantes">
+        <td>{{estudiante.nombres}}</td>
+        <td>{{estudiante.apellidos}}</td>
+        <td>{{estudiante.correo}}</td>
+        <td>{{estudiante.codigo}}</td>
+        <td><a routerLink="/estudiantesForm/{{estudiante.id}}" class="btn btn-warning">Editar</a></td>
+        <td><button (click)="onDelete(estudiante.id)" class="btn btn-danger">Eliminar</button></td>
+      </tr>
+    </tbody>
+  </table>
+</main>

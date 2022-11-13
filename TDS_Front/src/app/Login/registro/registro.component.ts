@@ -93,6 +93,8 @@ export class RegistroComponent implements OnInit {
           )
         })
       }
+    } else {
+      window.scrollTo(0, 0);
     }
   }
 
