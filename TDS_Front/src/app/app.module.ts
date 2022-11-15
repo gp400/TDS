@@ -14,6 +14,7 @@ import { LoginGuard } from './Institucion/auth/login.guard';
 import { RegistroComponent as UsuarioRegistro } from './Login/registro/registro.component'
 import { IndexComponent as UsuarioIndex } from './Login/index/index.component';
 import { LoginComponent as UsuarioLogin } from './Login/login/login.component';
+import { IndexComponent as MaestrosIndex } from './Maestros/index/index.component';
 import { IndexComponent as EstudiantesIndex } from './Estudiantes/index/index.component';
 import { FormComponent as EstudiantesForm } from './Estudiantes/form/form.component';
 
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: "institucion/registro", component: RegistroComponent },
   { path: "institucion/login", component: LoginComponent },
   { path: "institucion", component: IndexComponent, canActivate: [LoginGuard] },
+  { path: "maestros", component: MaestrosIndex, canActivate: [LoginGuard] },
   { path: "estudiantes", component: EstudiantesIndex, canActivate: [LoginGuard] },
   { path: "estudiantesForm", component: EstudiantesForm, canActivate: [LoginGuard] },
   { path: "estudiantesForm/:id", component: EstudiantesForm, canActivate: [LoginGuard] },
@@ -40,8 +42,9 @@ const routes: Routes = [
     UsuarioRegistro,
     UsuarioIndex,
     UsuarioLogin,
+    MaestrosIndex,
     EstudiantesIndex,
-    EstudiantesForm
+    EstudiantesForm,
   ],
   imports: [
     BrowserModule,
