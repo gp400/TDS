@@ -75,6 +75,14 @@ namespace TDS.Controllers
                 {
                     return BadRequest($"Ya existe un maestro con codigo {maestro.Codigo}");
                 }
+                Institucion institucion = await _context.Institucions.Where(x => x.Estado == true && x.Id == maestro.InstitucionId).FirstOrDefaultAsync();
+                if (institucion?.Licencias == 0)
+                {
+                    return BadRequest($"La institucion no cuenta con suficientes licencias para crear un nuevo maestro, debe de comprar mas");
+                } else
+                {
+                    institucion.Licencias = institucion.Licencias - 1;
+                }
                 maestro.Estado = true;
                 await _context.Maestros.AddAsync(maestro);
                 await _context.SaveChangesAsync();
