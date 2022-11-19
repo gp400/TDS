@@ -1,7 +1,7 @@
 <app-navbar></app-navbar>
 <main class="container">
   <h1 class="text-center my-3">Maestros</h1>
-  <a routerLink="" class="btn btn-primary my-3">Agregar Maestro</a>
+  <a routerLink="/maestrosForm" class="btn btn-primary my-3">Agregar Maestro</a>
   <table class="table table-striped table-hover">
     <thead>
       <tr>
@@ -23,7 +23,7 @@
         <td>{{maestro.telefono}}</td>
         <td>{{maestro.direccion}}</td>
         <td>{{maestro.codigo}}</td>
-        <td><a routerLink="" class="btn btn-warning">Editar</a></td>
+        <td><a routerLink="/maestrosForm/{{maestro.id}}" class="btn btn-warning">Editar</a></td>
         <td><button (click)="onDelete(maestro.id)" class="btn btn-danger">Eliminar</button></td>
       </tr>
     </tbody>

@@ -30,6 +30,24 @@ export class APIService {
     return this.http.get<Maestro[]>(`https://localhost:7082/Maestro/GetMaestros/${this.getInstitucionId()}`);
   }
 
+  public getMaestroById(id: number){
+    return this.http.get<Maestro>(`https://localhost:7082/Maestro/GetMaestroById/${this.getInstitucionId()}/${id}`);
+  }
+
+  public insertMaestro(maestro: Maestro){
+    maestro.institucionId = this.getInstitucionId();
+    return this.http.post<Estudiante>(`https://localhost:7082/Maestro/InsertMaestro`, maestro);
+  }
+
+  public updateMaestro(maestro: Maestro){
+    maestro.institucionId = this.getInstitucionId();
+    return this.http.put<Estudiante>(`https://localhost:7082/Maestro/UpdateMaestro`, maestro);
+  }
+
+  public deleteMaestro(id: number){
+    return this.http.delete<Estudiante>(`https://localhost:7082/Maestro/DeleteMaestro/${this.getInstitucionId()}/${id}`);
+  }
+
   public getEstudiantes(){
     return this.http.get<Estudiante[]>(`https://localhost:7082/Estudiantes/GetEstudiantes/${this.getInstitucionId()}`);
   }
@@ -54,6 +72,24 @@ export class APIService {
 
   public getClases(){
     return this.http.get<Clase[]>(`https://localhost:7082/Clase/GetClases/${this.getInstitucionId()}`);
+  }
+
+  public getClaseById(id: number){
+    return this.http.get<Clase>(`https://localhost:7082/Clase/GetClasesById/${this.getInstitucionId()}/${id}`);
+  }
+
+  public insertClase(clase: Clase){
+    clase.institucionId = this.getInstitucionId();
+    return this.http.post<Clase>(`https://localhost:7082/Clase/InsertClase`, clase);
+  }
+
+  public updateClase(clase: Clase){
+    clase.institucionId = this.getInstitucionId();
+    return this.http.put<Clase>(`https://localhost:7082/Clase/UpdateClase`, clase);
+  }
+
+  public deleteClase(id: number){
+    return this.http.delete<Clase>(`https://localhost:7082/Clase/DeleteClase/${this.getInstitucionId()}/${id}`);
   }
 
   public login(correo: string, password: string){

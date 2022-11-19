@@ -19,6 +19,12 @@ export class IndexComponent implements OnInit {
     })
   }
 
-  onDelete(id: number){}
+  onDelete(id: number){
+    this.API.deleteMaestro(id).subscribe(usuario => {
+      this.API.getMaestros().subscribe(teachers => {
+        this.maestros = teachers;
+      })
+    })
+  }
 
 }

@@ -1,0 +1,29 @@
+<app-navbar></app-navbar>
+<main class="container">
+  <h1 class="text-center my-3">Clases</h1>
+  <a routerLink="/clasesForm" class="btn btn-primary my-3">Agregar Clase</a>
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Maestro</th>
+        <th>Codigo</th>
+        <th>Hora Inicio</th>
+        <th>Hora Fin</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let clase of clases">
+        <td>{{clase.nombre}}</td>
+        <td>{{clase.maestro.nombres}} {{clase.maestro.apellidos}}</td>
+        <td>{{clase.codigo}}</td>
+        <td>{{clase.horaInicio}}</td>
+        <td>{{clase.horaFin}}</td>
+        <td><a routerLink="/clasesForm/{{clase.id}}" class="btn btn-warning">Editar</a></td>
+        <td><button (click)="onDelete(clase.id)" class="btn btn-danger">Eliminar</button></td>
+      </tr>
+    </tbody>
+  </table>
+</main>

@@ -19,7 +19,7 @@ export class FormComponent implements OnInit {
   idClase: number = 0;
   title = "Ingrese un estudiante";
 
-  constructor(private API: APIService, private router: Router, private route: ActivatedRoute) { }
+  constructor(private API: APIService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.API.getClases().subscribe(clases => {

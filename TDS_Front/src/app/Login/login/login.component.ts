@@ -17,12 +17,20 @@ export class LoginComponent implements OnInit {
   constructor(private API: APIService, private router: Router) { }
 
   ngOnInit(): void {
+    localStorage.removeItem("institucion");
     localStorage.removeItem("usuario");
   }
 
   onSubmit(){
     this.API.login(this.email, this.password).subscribe(post => {
       localStorage.setItem("usuario", JSON.stringify(post))
+      let ruta = "";
+      if (post.maestroId != null){
+        ruta = "/maestroUser";
+      } else {
+        ruta = "/";
+      }
+      this.router.navigate([ruta])
     }, error => {
       Swal.fire(
         "Alerta",

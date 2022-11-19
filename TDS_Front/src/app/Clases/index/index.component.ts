@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Institucion } from 'src/app/models/institucion';
+import { Clase } from 'src/app/models/clase';
 import { APIService } from 'src/app/services/api.service';
 
 @Component({
@@ -9,14 +9,21 @@ import { APIService } from 'src/app/services/api.service';
 })
 export class IndexComponent implements OnInit {
 
-  institucion: Institucion = JSON.parse(localStorage.getItem("institucion")||"") as Institucion;
-  licencias = 0;
+  clases: Clase[] = [];
 
   constructor(private API: APIService) { }
 
   ngOnInit(): void {
-    this.API.getInstitucionByCodigo(this.institucion.codigo).subscribe(insti => {
-      this.licencias = insti.licencias;
+    this.API.getClases().subscribe( clases => {
+      this.clases = clases;
+    })
+  }
+
+  onDelete(id: number){
+    this.API.deleteClase(id).subscribe(usuario => {
+      this.API.getClases().subscribe( clases => {
+        this.clases = clases;
+      })
     })
   }
 

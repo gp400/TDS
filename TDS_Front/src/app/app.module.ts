@@ -15,17 +15,31 @@ import { RegistroComponent as UsuarioRegistro } from './Login/registro/registro.
 import { IndexComponent as UsuarioIndex } from './Login/index/index.component';
 import { LoginComponent as UsuarioLogin } from './Login/login/login.component';
 import { IndexComponent as MaestrosIndex } from './Maestros/index/index.component';
+import { FormComponent as MaestrosForm } from './Maestros/form/form.component';
+import { IndexUserComponent as MaestroUserIndex } from './Maestros/index-user/index-user.component';
 import { IndexComponent as EstudiantesIndex } from './Estudiantes/index/index.component';
 import { FormComponent as EstudiantesForm } from './Estudiantes/form/form.component';
+import { IndexUserComponent as EstudianteUserIndex } from './Estudiantes/index-user/index-user.component';
+import { IndexComponent as ClasesIndex } from './Clases/index/index.component';
+import { FormComponent as ClasesForm } from './Clases/form/form.component';
+import { LoginGuard as UserLogin } from './Auth/login.guard';
 
 const routes: Routes = [
+  { path: "", redirectTo: "estudianteUser", pathMatch: "full" },
   { path: "institucion/registro", component: RegistroComponent },
   { path: "institucion/login", component: LoginComponent },
   { path: "institucion", component: IndexComponent, canActivate: [LoginGuard] },
   { path: "maestros", component: MaestrosIndex, canActivate: [LoginGuard] },
+  { path: "maestrosForm", component: MaestrosForm, canActivate: [LoginGuard] },
+  { path: "maestrosForm/:id", component: MaestrosForm, canActivate: [LoginGuard] },
+  { path: "maestroUser", component: MaestroUserIndex, canActivate: [UserLogin] },
   { path: "estudiantes", component: EstudiantesIndex, canActivate: [LoginGuard] },
   { path: "estudiantesForm", component: EstudiantesForm, canActivate: [LoginGuard] },
   { path: "estudiantesForm/:id", component: EstudiantesForm, canActivate: [LoginGuard] },
+  { path: "estudianteUser", component: EstudianteUserIndex, canActivate: [UserLogin] },
+  { path: "clases", component: ClasesIndex, canActivate: [LoginGuard] },
+  { path: "clasesForm", component: ClasesForm, canActivate: [LoginGuard] },
+  { path: "clasesForm/:id", component: ClasesForm, canActivate: [LoginGuard] },
   { path: "usuario", component: UsuarioIndex, canActivate: [LoginGuard] },
   { path: "usuario/registro", component: UsuarioRegistro, canActivate: [LoginGuard] },
   { path: "usuario/registro/:id", component: UsuarioRegistro, canActivate: [LoginGuard] },
@@ -43,8 +57,13 @@ const routes: Routes = [
     UsuarioIndex,
     UsuarioLogin,
     MaestrosIndex,
+    MaestrosForm,
     EstudiantesIndex,
     EstudiantesForm,
+    MaestrosForm,
+    ClasesIndex,
+    ClasesForm,
+    MaestroUserIndex
   ],
   imports: [
     BrowserModule,

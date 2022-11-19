@@ -1,0 +1,41 @@
+<app-navbar></app-navbar>
+<main class="container">
+  <h1 class="text-center my-3">{{title}}</h1>
+  <a routerLink="/clases" class="btn btn-primary my-3">Volver</a>
+  <ng-template ngFor let-error [ngForOf]="errores">
+    <p class="alert alert-danger" role="alert">{{error}}</p>
+  </ng-template>
+  <form (ngSubmit)="onSubmit()" #formRegistro="ngForm">
+    <div class="mb-3">
+      <label for="nombre" class="form-label">Nombre</label>
+      <input type="text" [(ngModel)]="clase.nombre" name="nombre" class="form-control" id="nombre">
+    </div>
+    <div class="mb-3">
+      <label for="descripcion" class="form-label">Descripcion</label>
+      <textarea type="text" [(ngModel)]="clase.descripcion" name="descripcion" class="form-control" id="descripcion"></textarea>
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="maestroId">Maestro</label>
+      <select name="maestroId" class="form-select" id="maestroId" [(ngModel)]="clase.maestroId" name="maestroId">
+        <ng-template ngFor let-maestro [ngForOf]="maestros">
+          <option value="{{maestro.id}}">{{maestro.nombres}} {{maestro.apellidos}}</option>
+        </ng-template>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label for="codigo" class="form-label">Codigo</label>
+      <input type="text" [(ngModel)]="clase.codigo" name="codigo" class="form-control" id="codigo">
+    </div>
+    <div class="mb-3">
+      <label for="horaInicio" class="form-label">Hora de Inicio</label>
+      <input type="time" [(ngModel)]="clase.horaInicio" name="horaInicio" class="form-control" id="horaInicio">
+    </div>
+    <div class="mb-3">
+      <label for="horaFin" class="form-label">Hora de Fin</label>
+      <input type="time" [(ngModel)]="clase.horaFin" name="horaFin" class="form-control" id="horaFin">
+    </div>
+    <div>
+      <input type="submit" value="Guardar" class="btn btn-primary mb-3">
+    </div>
+  </form>
+</main>
