@@ -102,7 +102,8 @@ namespace TDS.Controllers
             {
                 var listado = await _context.EstudiantesClases.Where(x => x.ClaseId == ClaseId && x.EstudianteId == EstudianteId && x.Clase.Estado == true && x.Estudiante.Estado == true).ToListAsync();
                 return Ok(listado);
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -185,7 +186,7 @@ namespace TDS.Controllers
                     return BadRequest($"Asegurese de que sea un maestro valido");
                 }
                 oldEstudiante.Estado = false;
-                foreach(var usuario in oldEstudiante.Usuarios)
+                foreach (var usuario in oldEstudiante.Usuarios)
                 {
                     usuario.Estado = false;
                 }

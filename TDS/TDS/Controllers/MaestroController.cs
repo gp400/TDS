@@ -79,7 +79,8 @@ namespace TDS.Controllers
                 if (institucion?.Licencias == 0)
                 {
                     return BadRequest($"La institucion no cuenta con suficientes licencias para crear un nuevo maestro, debe de comprar mas");
-                } else
+                }
+                else
                 {
                     institucion.Licencias = institucion.Licencias - 1;
                 }
@@ -99,6 +100,10 @@ namespace TDS.Controllers
         {
             try
             {
+                if (await _context.Maestros.AnyAsync(x => x.Id != maestro.Id && x.Estado == true && x.InstitucionId == maestro.InstitucionId && x.Codigo == maestro.Codigo))
+                {
+                    return BadRequest($"Ya existe un estudiante con codigo {maestro.Codigo}");
+                }
                 var oldMaestro = await _context.Maestros.FirstOrDefaultAsync(x => x.Id == maestro.Id && x.Estado == true && x.InstitucionId == maestro.InstitucionId);
                 if (oldMaestro == null)
                 {

@@ -20,8 +20,8 @@ namespace TDS.Models
         public int? InstitucionId { get; set; }
         public string? Codigo { get; set; }
         public bool? Estado { get; set; }
-        public DateTime? FechaInicio { get; set; }
-        public DateTime? FechaFin { get; set; }
+        public string? HoraInicio { get; set; }
+        public string? HoraFin { get; set; }
 
         public virtual Institucion? Institucion { get; set; }
         public virtual Maestro? Maestro { get; set; }

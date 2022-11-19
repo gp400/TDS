@@ -54,9 +54,9 @@ namespace TDS.Models
 
                 entity.Property(e => e.Estado).HasColumnName("estado");
 
-                entity.Property(e => e.FechaFin).HasColumnType("datetime");
+                entity.Property(e => e.HoraFin).IsUnicode(false);
 
-                entity.Property(e => e.FechaInicio).HasColumnType("datetime");
+                entity.Property(e => e.HoraInicio).IsUnicode(false);
 
                 entity.Property(e => e.Nombre)
                     .HasMaxLength(100)
