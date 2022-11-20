@@ -20,7 +20,7 @@ namespace TDS.Controllers
         {
             try
             {
-                var clases = await _context.Clases.Where(x => x.Estado == true && x.InstitucionId == idInstitucion).Include(x => x.EstudiantesClases.Where(e => e.Estudiante.Estado == true)).ThenInclude(x => x.Estudiante).Include(x => x.Maestro).Include(x => x.Tareas).AsNoTracking().ToListAsync();
+                var clases = await _context.Clases.Where(x => x.Estado == true && x.InstitucionId == idInstitucion).Include(x => x.EstudiantesClases.Where(e => e.Estudiante.Estado == true)).ThenInclude(x => x.Estudiante).Include(x => x.Maestro).Include(x => x.Tareas.Where(x => x.Estado == true)).AsNoTracking().ToListAsync();
                 return Ok(clases);
             }
             catch (Exception ex)
@@ -34,7 +34,7 @@ namespace TDS.Controllers
         {
             try
             {
-                var clase = await _context.Clases.Where(x => x.Estado == true && x.InstitucionId == idInstitucion && x.Id == id).Include(x => x.EstudiantesClases.Where(e => e.Estudiante.Estado == true)).ThenInclude(x => x.Estudiante).Include(x => x.Maestro).Include(x => x.Tareas).AsNoTracking().FirstOrDefaultAsync();
+                var clase = await _context.Clases.Where(x => x.Estado == true && x.InstitucionId == idInstitucion && x.Id == id).Include(x => x.EstudiantesClases.Where(e => e.Estudiante.Estado == true)).ThenInclude(x => x.Estudiante).Include(x => x.Maestro).Include(x => x.Tareas.Where(x => x.Estado == true)).AsNoTracking().FirstOrDefaultAsync();
                 if (clase == null)
                 {
                     return NotFound("No existe esa clase");
@@ -51,7 +51,7 @@ namespace TDS.Controllers
         {
             try
             {
-                var clases = await _context.Clases.Where(x => x.Estado == true && x.InstitucionId == idInstitucion && x.MaestroId == idMaestro).Include(x => x.EstudiantesClases.Where(e => e.Estudiante.Estado == true)).ThenInclude(x => x.Estudiante).Include(x => x.Maestro).Include(x => x.Tareas).Include(x => x.Tareas).AsNoTracking().ToListAsync();
+                var clases = await _context.Clases.Where(x => x.Estado == true && x.InstitucionId == idInstitucion && x.MaestroId == idMaestro).Include(x => x.EstudiantesClases.Where(e => e.Estudiante.Estado == true)).ThenInclude(x => x.Estudiante).Include(x => x.Maestro).Include(x => x.Tareas.Where(x => x.Estado == true)).Include(x => x.Tareas).AsNoTracking().ToListAsync();
                 return Ok(clases);
             }
             catch (Exception ex)
@@ -65,7 +65,7 @@ namespace TDS.Controllers
         {
             try
             {
-                var clase = await _context.Clases.Where(x => x.Estado == true && x.InstitucionId == idInstitucion && x.Codigo == codigo).Include(x => x.EstudiantesClases.Where(e => e.Estudiante.Estado == true)).ThenInclude(x => x.Estudiante).Include(x => x.Maestro).Include(x => x.Tareas).AsNoTracking().FirstOrDefaultAsync();
+                var clase = await _context.Clases.Where(x => x.Estado == true && x.InstitucionId == idInstitucion && x.Codigo == codigo).Include(x => x.EstudiantesClases.Where(e => e.Estudiante.Estado == true)).ThenInclude(x => x.Estudiante).Include(x => x.Maestro).Include(x => x.Tareas.Where(x => x.Estado == true)).AsNoTracking().FirstOrDefaultAsync();
                 if (clase == null)
                 {
                     return NotFound("No existe esa clase");

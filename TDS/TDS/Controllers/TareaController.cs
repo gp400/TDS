@@ -91,6 +91,10 @@ namespace TDS.Controllers
         {
             try
             {
+                if (await _context.Tareas.AnyAsync(x => x.Id != tarea.Id && x.Estado == true && x.IdClase == tarea.IdClase && x.Codigo == tarea.Codigo))
+                {
+                    return BadRequest($"Ya existe una tarea con codigo {tarea.Codigo}");
+                }
                 var oldTarea = await _context.Tareas.FirstOrDefaultAsync(x => x.Id == tarea.Id && x.Estado == true && x.IdClase == tarea.IdClase);
                 if (oldTarea == null)
                 {
