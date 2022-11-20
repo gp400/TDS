@@ -115,10 +115,10 @@ namespace TDS.Controllers
         {
             try
             {
-                var usuario = await _context.Usuarios.Include(x => x.Maestro).Where(x => x.Maestro != null).FirstOrDefaultAsync(x => x.Maestro.Correo == correo && this.HashPassword(password) == x.Password);
+                var usuario = await _context.Usuarios.Include(x => x.Maestro).Include(x => x.Institucion).Where(x => x.Maestro != null).FirstOrDefaultAsync(x => x.Maestro.Correo == correo && this.HashPassword(password) == x.Password);
                 if (usuario == null)
                 {
-                    usuario = await _context.Usuarios.Include(x => x.Estudiante).Where(x => x.Estudiante != null).FirstOrDefaultAsync(x => x.Estudiante.Correo == correo && this.HashPassword(password) == x.Password);
+                    usuario = await _context.Usuarios.Include(x => x.Estudiante).Include(x => x.Institucion).Where(x => x.Estudiante != null).FirstOrDefaultAsync(x => x.Estudiante.Correo == correo && this.HashPassword(password) == x.Password);
                     if (usuario != null)
                     {
                         return Ok(usuario);

@@ -20,7 +20,7 @@ namespace TDS.Controllers
         {
             try
             {
-                var clases = await _context.Maestros.Where(x => x.Estado == true && x.InstitucionId == idInstitucion).AsNoTracking().ToListAsync();
+                var clases = await _context.Maestros.Include(x => x.Clases.Where(x => x.Estado == true)).ThenInclude(x => x.EstudiantesClases.Where(c => c.Clase.Estado == true && c.Estudiante.Estado == true)).ThenInclude(x => x.Estudiante).Where(x => x.Estado == true && x.InstitucionId == idInstitucion).AsNoTracking().ToListAsync();
                 return Ok(clases);
             }
             catch (Exception ex)
@@ -34,7 +34,7 @@ namespace TDS.Controllers
         {
             try
             {
-                var clase = await _context.Maestros.Where(x => x.Estado == true && x.InstitucionId == idInstitucion && x.Id == id).AsNoTracking().FirstOrDefaultAsync();
+                var clase = await _context.Maestros.Include(x => x.Clases.Where(x => x.Estado == true)).ThenInclude(x => x.EstudiantesClases.Where(c => c.Clase.Estado == true && c.Estudiante.Estado == true)).ThenInclude(x => x.Estudiante).Where(x => x.Estado == true && x.InstitucionId == idInstitucion && x.Id == id).AsNoTracking().FirstOrDefaultAsync();
                 if (clase == null)
                 {
                     return NotFound("No existe ese maestro");
@@ -52,7 +52,7 @@ namespace TDS.Controllers
         {
             try
             {
-                var clase = await _context.Maestros.Where(x => x.Estado == true && x.InstitucionId == idInstitucion && x.Codigo == codigo).AsNoTracking().FirstOrDefaultAsync();
+                var clase = await _context.Maestros.Include(x => x.Clases.Where(x => x.Estado == true)).ThenInclude(x => x.EstudiantesClases.Where(c => c.Clase.Estado == true && c.Estudiante.Estado == true)).ThenInclude(x => x.Estudiante).Where(x => x.Estado == true && x.InstitucionId == idInstitucion && x.Codigo == codigo).AsNoTracking().FirstOrDefaultAsync();
                 if (clase == null)
                 {
                     return NotFound("No existe ese maestro");
