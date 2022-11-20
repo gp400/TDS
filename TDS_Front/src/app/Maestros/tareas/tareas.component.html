@@ -1,8 +1,42 @@
 <app-navbar-user></app-navbar-user>
 <main class="container">
   <h1 class="text-center my-3">Tareas</h1>
-  <button class="btn btn-primary my-3">Agregar Tarea</button>
-  <div class="row g-3">
+  <button (click)="setTarea(0)" type="button" class="btn btn-primary my-3" data-bs-toggle="modal" data-bs-target="#tareasModal">Agregar Tarea</button>
+  <div class="modal fade" id="tareasModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="tareasModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="tareasModalLabel">{{title}}</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form (ngSubmit)="onSubmit()" #formRegistro="ngForm">
+            <div class="mb-3">
+              <label for="titulo" class="form-label">Titulo</label>
+              <input type="text" [(ngModel)]="tarea.titulo" name="titulo" class="form-control" id="titulo">
+            </div>
+            <div class="mb-3">
+              <label for="descripcion" class="form-label">Descripcion</label>
+              <textarea [(ngModel)]="tarea.descripcion" name="descripcion" class="form-control" id="descripcion"></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="fechaEntrega" class="form-label">Fecha de Entrega</label>
+              <input type="date" [(ngModel)]="tarea.fechaEntrega" name="fechaEntrega" class="form-control" id="fechaEntrega">
+            </div>
+            <div class="mb-3">
+              <label for="codigo" class="form-label">Codigo</label>
+              <input type="text" [(ngModel)]="tarea.codigo" name="codigo" class="form-control" id="codigo">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button #btnCerrar type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          <button type="button" (click)="onSubmit()" class="btn btn-primary">Guardar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row g-3 mb-3">
     <ng-template ngFor let-tarea [ngForOf]="clase.tareas">
       <div class="col-4">
         <div class="card">
@@ -10,7 +44,10 @@
             <h4 class="card-title">{{tarea.titulo}}</h4>
             <p style="margin-top: 16px;"><strong>Fecha Entrega: </strong>{{tarea.fechaEntrega}}</p>
             <p class="card-text">{{tarea.descripcion}}</p>
-            <a routerLink="" class="btn btn-warning">Editar</a>
+            <div class="my-3">
+              <button (click)="setTarea(tarea.id)" type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#tareasModal">Editar</button>
+              <button (click)="onDelete(tarea.id)" type="button" class="btn btn-danger ms-1">Eliminar</button>
+            </div>
           </div>
         </div>
       </div>

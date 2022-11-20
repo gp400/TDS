@@ -4,6 +4,7 @@ import { Clase } from '../models/clase';
 import { Estudiante } from '../models/estudiante';
 import { Institucion } from '../models/institucion';
 import { Maestro } from '../models/maestro';
+import { Tarea } from '../models/tarea';
 import { Usuario } from '../models/usuario';
 
 @Injectable({
@@ -99,6 +100,26 @@ export class APIService {
 
   public deleteClase(id: number){
     return this.http.delete<Clase>(`https://localhost:7082/Clase/DeleteClase/${this.getInstitucionId()}/${id}`);
+  }
+
+  public getTareas(idClase: number){
+    return this.http.get<Tarea[]>(`https://localhost:7082/Tarea/GetTareas/${idClase}`);
+  }
+
+  public getTareaById(idClase: number, id: number){
+    return this.http.get<Tarea>(`https://localhost:7082/Tarea/GetTareaById/${idClase}/${id}`);
+  }
+
+  public insertTarea(tarea: Tarea){
+    return this.http.post<Tarea>(`https://localhost:7082/Tarea/InsertTarea`, tarea)
+  }
+
+  public updateTarea(tarea: Tarea){
+    return this.http.put<Tarea>(`https://localhost:7082/Tarea/UpdateTarea`, tarea)
+  }
+
+  public deleteTarea(idClase: number, id: number){
+    return this.http.delete<Tarea>(`https://localhost:7082/Tarea/DeleteTarea/${idClase}/${id}`)
   }
 
   public login(correo: string, password: string){
