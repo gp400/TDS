@@ -1,0 +1,24 @@
+<nav class="navbar navbar-expand-lg bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" routerLink="/maestroUser">{{usuario.maestro?.nombres}} {{usuario.maestro?.apellidos}}</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/maestroUser">Clases</a>
+        </li>
+        <ng-template [ngIf]="id != 0">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/maestroUser/clases/estudiantes/{{id}}">Estudiantes</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/maestroUser/clases/tareas/{{id}}">Tareas</a>
+          </li>
+        </ng-template>
+      </ul>
+    </div>
+    <a routerLink="/usuario/login" class="btn btn-danger">Cerrar Sesion</a>
+  </div>
+</nav>

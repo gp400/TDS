@@ -1,0 +1,19 @@
+<app-navbar-user></app-navbar-user>
+<main class="container">
+  <h1 class="text-center my-3">Tareas</h1>
+  <button class="btn btn-primary my-3">Agregar Tarea</button>
+  <div class="row g-3">
+    <ng-template ngFor let-tarea [ngForOf]="clase.tareas">
+      <div class="col-4">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">{{tarea.titulo}}</h4>
+            <p style="margin-top: 16px;"><strong>Fecha Entrega: </strong>{{tarea.fechaEntrega}}</p>
+            <p class="card-text">{{tarea.descripcion}}</p>
+            <a routerLink="" class="btn btn-warning">Editar</a>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</main>

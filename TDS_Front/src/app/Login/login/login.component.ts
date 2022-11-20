@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Usuario } from 'src/app/models/usuario';
 import { APIService } from 'src/app/services/api.service';
 import Swal from 'sweetalert2';
 
@@ -23,7 +22,8 @@ export class LoginComponent implements OnInit {
 
   onSubmit(){
     this.API.login(this.email, this.password).subscribe(post => {
-      localStorage.setItem("usuario", JSON.stringify(post))
+      localStorage.setItem("usuario", JSON.stringify(post));
+      localStorage.setItem("institucion", JSON.stringify(post.institucion));
       let ruta = "";
       if (post.maestroId != null){
         ruta = "/maestroUser";

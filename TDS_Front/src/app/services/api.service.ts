@@ -18,6 +18,11 @@ export class APIService {
     return institucion.id;
   }
 
+  private getMaestroId(){
+    let user: Usuario = JSON.parse(localStorage.getItem("usuario")||"") as Usuario;
+    return user.maestroId;
+  }
+
   public getInstitucionByCodigo(codigo: string){
     return this.http.get<Institucion>(`https://localhost:7082/Institucion/GetInstitucionByCodigo/${codigo.toLocaleLowerCase()}`)
   }
@@ -76,6 +81,10 @@ export class APIService {
 
   public getClaseById(id: number){
     return this.http.get<Clase>(`https://localhost:7082/Clase/GetClasesById/${this.getInstitucionId()}/${id}`);
+  }
+
+  public getClasesByMaestro(){
+    return this.http.get<Clase[]>(`https://localhost:7082/Clase/GetClasesByMaestroId/${this.getInstitucionId()}/${this.getMaestroId()}`);
   }
 
   public insertClase(clase: Clase){
