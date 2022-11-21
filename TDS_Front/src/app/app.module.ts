@@ -23,10 +23,12 @@ import { TareasComponent as MaestrosUserTareas } from './Maestros/tareas/tareas.
 import { IndexComponent as EstudiantesIndex } from './Estudiantes/index/index.component';
 import { FormComponent as EstudiantesForm } from './Estudiantes/form/form.component';
 import { IndexUserComponent as EstudianteUserIndex } from './Estudiantes/index-user/index-user.component';
+import { TareaComponent as EstudiantesUserTarea } from './Estudiantes/tarea/tarea.component';
 import { IndexComponent as ClasesIndex } from './Clases/index/index.component';
 import { FormComponent as ClasesForm } from './Clases/form/form.component';
 import { LoginGuard as UserLogin } from './Auth/login.guard';
-import { NavbarUserComponent } from './Maestros/navbar-user/navbar-user.component';
+import { NavbarUserComponent as NavbarUserMaestros } from './Maestros/navbar-user/navbar-user.component';
+import { NavbarUserComponent as NavbarUserEstudiantes } from './Estudiantes/navbar-user/navbar-user.component';
 
 const routes: Routes = [
   { path: "", redirectTo: "usuario/login", pathMatch: "full" },
@@ -43,6 +45,8 @@ const routes: Routes = [
   { path: "estudiantesForm", component: EstudiantesForm, canActivate: [LoginGuard] },
   { path: "estudiantesForm/:id", component: EstudiantesForm, canActivate: [LoginGuard] },
   { path: "estudianteUser", component: EstudianteUserIndex, canActivate: [UserLogin] },
+  { path: "estudianteUser/tarea", component: EstudiantesUserTarea, canActivate: [UserLogin] },
+  { path: "estudianteUser/tarea/:id", component: EstudiantesUserTarea, canActivate: [UserLogin] },
   { path: "clases", component: ClasesIndex, canActivate: [LoginGuard] },
   { path: "clasesForm", component: ClasesForm, canActivate: [LoginGuard] },
   { path: "clasesForm/:id", component: ClasesForm, canActivate: [LoginGuard] },
@@ -70,9 +74,12 @@ const routes: Routes = [
     ClasesIndex,
     ClasesForm,
     MaestroUserIndex,
-    NavbarUserComponent,
+    NavbarUserMaestros,
     MaestroUserEstudiantes,
-    MaestrosUserTareas
+    MaestrosUserTareas,
+    EstudianteUserIndex,
+    NavbarUserEstudiantes,
+    EstudiantesUserTarea
   ],
   imports: [
     BrowserModule,
