@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
       if (post.maestroId != null){
         ruta = "/maestroUser";
       } else {
-        ruta = "/";
+        ruta = "/estudianteUser";
       }
       this.router.navigate([ruta])
     }, error => {

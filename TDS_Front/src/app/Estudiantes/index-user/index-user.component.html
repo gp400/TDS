@@ -1,1 +1,17 @@
-<p>index-user works!</p>
+<app-navbar-user-estudiante></app-navbar-user-estudiante>
+<main class="container">
+  <h1 class="text-center my-3">Clases</h1>
+  <div class="row g-3">
+    <ng-template ngFor let-ec [ngForOf]="estudiante.estudiantesClases">
+      <div class="col-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">{{ec.clase.nombre}}</h5>
+            <p class="card-text">{{ec.clase.descripcion}}</p>
+            <a routerLink="/estudianteUser/tarea/{{ec.clase.id}}" class="btn btn-primary">Visitar</a>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</main>
