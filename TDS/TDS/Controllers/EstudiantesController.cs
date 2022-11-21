@@ -20,7 +20,7 @@ namespace TDS.Controllers
         {
             try
             {
-                var clases = await _context.Estudiantes.Where(x => x.Estado == true && x.InstitucionId == idInstitucion).Include(x => x.EstudiantesClases.Where(c => c.Clase.Estado == true)).AsNoTracking().ToListAsync();
+                var clases = await _context.Estudiantes.Where(x => x.Estado == true && x.InstitucionId == idInstitucion).Include(x => x.EstudiantesClases.Where(c => c.Clase.Estado == true)).ThenInclude(x => x.Clase).ThenInclude(x => x.Tareas.Where(t => t.Estado == true)).AsNoTracking().ToListAsync();
                 return Ok(clases);
             }
             catch (Exception ex)
@@ -34,7 +34,7 @@ namespace TDS.Controllers
         {
             try
             {
-                var clase = await _context.Estudiantes.Where(x => x.Estado == true && x.InstitucionId == idInstitucion && x.Id == id).Include(x => x.EstudiantesClases.Where(c => c.Clase.Estado == true)).AsNoTracking().FirstOrDefaultAsync();
+                var clase = await _context.Estudiantes.Where(x => x.Estado == true && x.InstitucionId == idInstitucion && x.Id == id).Include(x => x.EstudiantesClases.Where(c => c.Clase.Estado == true)).ThenInclude(x => x.Clase).ThenInclude(x => x.Tareas.Where(t => t.Estado == true)).AsNoTracking().FirstOrDefaultAsync();
                 if (clase == null)
                 {
                     return NotFound("No existe ese estudiante");
@@ -52,7 +52,7 @@ namespace TDS.Controllers
         {
             try
             {
-                var clase = await _context.Estudiantes.Where(x => x.Estado == true && x.InstitucionId == idInstitucion && x.Codigo == codigo).Include(x => x.EstudiantesClases.Where(c => c.Clase.Estado == true)).AsNoTracking().FirstOrDefaultAsync();
+                var clase = await _context.Estudiantes.Where(x => x.Estado == true && x.InstitucionId == idInstitucion && x.Codigo == codigo).Include(x => x.EstudiantesClases.Where(c => c.Clase.Estado == true)).ThenInclude(x => x.Clase).ThenInclude(x => x.Tareas.Where(t => t.Estado == true)).AsNoTracking().FirstOrDefaultAsync();
                 if (clase == null)
                 {
                     return NotFound("No existe ese estudiante");
