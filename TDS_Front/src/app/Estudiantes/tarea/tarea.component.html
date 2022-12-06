@@ -9,7 +9,25 @@
             <h4 class="card-title">{{tarea.titulo}}</h4>
             <p style="margin-top: 16px;"><strong>Fecha Entrega: </strong>{{tarea.fechaEntrega}}</p>
             <p class="card-text">{{tarea.descripcion}}</p>
-            <button [disabled]="isValidDate(tarea.fechaEntrega)" class="btn btn-primary">Entregar</button>
+            <button (click)="setModal(tarea.titulo, tarea.descripcion, tarea.id)" [disabled]="isValidDate(tarea.fechaEntrega)" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#agregartarea">Entregar</button>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" data-bs-backdrop="static" id="agregartarea" tabindex="-1" aria-labelledby="agregartarea" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">{{titulo}}</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <label for="formFile" class="form-label">{{descripcion}}</label>
+              <input (change)="onFileSelected($event)" class="form-control" type="file">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" #cerrar data-bs-dismiss="modal">Cerrar</button>
+              <button type="button" class="btn btn-primary" (click)="onSubmit()">Entregar</button>
+            </div>
           </div>
         </div>
       </div>
