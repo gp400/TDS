@@ -34,7 +34,7 @@ namespace TDS.Controllers
         {
             try
             {
-                var clase = await _context.Estudiantes.Where(x => x.Estado == true && x.InstitucionId == idInstitucion && x.Id == id).Include(x => x.EstudiantesClases.Where(c => c.Clase.Estado == true)).ThenInclude(x => x.Clase).ThenInclude(x => x.Tareas.Where(t => t.Estado == true)).AsNoTracking().FirstOrDefaultAsync();
+                var clase = await _context.Estudiantes.Where(x => x.Estado == true && x.InstitucionId == idInstitucion && x.Id == id).Include(x => x.EstudiantesClases.Where(c => c.Clase.Estado == true)).ThenInclude(x => x.Clase).ThenInclude(x => x.Tareas.Where(t => t.Estado == true)).Include(x => x.Entregas.Where(e => e.Estado == true)).AsNoTracking().FirstOrDefaultAsync();
                 if (clase == null)
                 {
                     return NotFound("No existe ese estudiante");

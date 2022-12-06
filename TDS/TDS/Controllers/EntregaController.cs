@@ -55,7 +55,7 @@ namespace TDS.Controllers
                 var existe = await _context.Entregas.AsNoTracking().FirstOrDefaultAsync(x => x.TareaId == entrega.TareaId && x.Estado == true && x.EstudianteId == entrega.EstudianteId);
                 if (existe != null)
                 {
-                    return BadRequest($"El estudiante no entrego esta tarea");
+                    return BadRequest($"El estudiante ya entrego esta tarea");
                 }
                 entrega.Estado = true;
                 await _context.Entregas.AddAsync(entrega);

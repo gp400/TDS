@@ -79,7 +79,7 @@ namespace TDS.Models
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.Documento).HasColumnType("text");
+                entity.Property(e => e.Documento).IsUnicode(false);
 
                 entity.HasOne(d => d.Estudiante)
                     .WithMany(p => p.Entregas)
