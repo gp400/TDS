@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Clase } from '../models/clase';
+import { Entrega } from '../models/entrega';
 import { Estudiante } from '../models/estudiante';
 import { Institucion } from '../models/institucion';
 import { Maestro } from '../models/maestro';
@@ -22,6 +23,11 @@ export class APIService {
   private getMaestroId(){
     let user: Usuario = JSON.parse(localStorage.getItem("usuario")||"") as Usuario;
     return user.maestroId;
+  }
+
+  private getEstudianteId(){
+    let user: Usuario = JSON.parse(localStorage.getItem("usuario")||"") as Usuario;
+    return user.estudianteId;
   }
 
   public getInstitucionByCodigo(codigo: string){
@@ -150,5 +156,11 @@ export class APIService {
 
   public deleteUsuario(id: number){
     return this.http.delete<Usuario>(`https://localhost:7082/Usuario/DeleteUsuario/${this.getInstitucionId()}/${id}`);
+  }
+
+  public insertEntrega(entrega: Entrega){
+    entrega.estudianteId = this.getEstudianteId();
+    entrega.estado = true;
+    return this.http.post<Entrega>(`https://localhost:7082/Entrega/InsertEntrega`, entrega);
   }
 }
