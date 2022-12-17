@@ -34,7 +34,7 @@ namespace TDS.Controllers
         {
             try
             {
-                var clase = await _context.Estudiantes.Where(x => x.Estado == true && x.InstitucionId == idInstitucion && x.Id == id).Include(x => x.EstudiantesClases.Where(c => c.Clase.Estado == true)).ThenInclude(x => x.Clase).ThenInclude(x => x.Tareas.Where(t => t.Estado == true)).Include(x => x.Entregas.Where(e => e.Estado == true)).AsNoTracking().FirstOrDefaultAsync();
+                var clase = await _context.Estudiantes.Where(x => x.Estado == true && x.InstitucionId == idInstitucion && x.Id == id).Include(x => x.EstudiantesClases.Where(c => c.Clase.Estado == true)).ThenInclude(x => x.Clase).ThenInclude(x => x.Tareas.Where(t => t.Estado == true)).Include(x => x.Entregas.Where(e => e.Estado == true)).ThenInclude(t => t.Tarea).AsNoTracking().FirstOrDefaultAsync();
                 if (clase == null)
                 {
                     return NotFound("No existe ese estudiante");
@@ -83,6 +83,11 @@ namespace TDS.Controllers
                 else
                 {
                     institucion.Licencias = institucion.Licencias - 1;
+                }
+                foreach(var ec in estudiante.EstudiantesClases)
+                {
+                    ec.Clase = null;
+                    ec.Estudiante = null;
                 }
                 estudiante.Estado = true;
                 await _context.Estudiantes.AddAsync(estudiante);
@@ -159,6 +164,11 @@ namespace TDS.Controllers
                     return BadRequest($"Asegurese de que sea un estudiante valido");
                 }
                 _context.EstudiantesClases.RemoveRange(oldEstudiante.EstudiantesClases);
+                foreach (var ec in estudiante.EstudiantesClases)
+                {
+                    ec.Clase = null;
+                    ec.Estudiante = null;
+                }
                 oldEstudiante.Apellidos = estudiante.Apellidos;
                 oldEstudiante.Codigo = estudiante.Codigo;
                 oldEstudiante.Correo = estudiante.Correo;

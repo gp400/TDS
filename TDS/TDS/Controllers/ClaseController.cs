@@ -78,6 +78,32 @@ namespace TDS.Controllers
             }
         }
 
+        //Hacer un endpoint que obtenga el acumulado
+        [HttpGet("GetAcumulado/{idClase}/{idEstudiante}")]
+        public async Task<IActionResult> GetAcumulado(int idClase, int idEstudiante)
+        {
+            try
+            {
+                var tareas = await _context.Tareas.Where(t => t.IdClase == idClase && t.Estado == true)
+                                                .Include(t => t.Entregas.Where(e => e.EstudianteId == idEstudiante && e.Estado == true)).ToListAsync();
+
+                var total = tareas.Sum(t => t.Calificacion);
+                int? acumulado = 0;
+                foreach(var tarea in tareas)
+                {
+                    foreach(var entrega in tarea.Entregas)
+                    {
+                        acumulado += entrega.Calificacion;
+                    }
+                }
+                return Ok(new { idClase , total, acumulado});
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpPost("InsertClase")]
         public async Task<IActionResult> InsertClase([FromBody] Clase clase)
         {

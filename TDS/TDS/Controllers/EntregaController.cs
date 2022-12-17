@@ -15,12 +15,12 @@ namespace TDS.Controllers
             this._context = context;
         }
 
-        [HttpGet("GetEntregas/{idClase}")]
+        [HttpGet("GetEntregas/{TareaId}")]
         public async Task<IActionResult> GetEntregas(int TareaId)
         {
             try
             {
-                var entregas = await _context.Entregas.Where(x => x.Estado == true && x.TareaId == TareaId).AsNoTracking().ToListAsync();
+                var entregas = await _context.Entregas.Where(x => x.Estado == true && x.TareaId == TareaId).Include(t => t.Estudiante).Include(t => t.Tarea).AsNoTracking().ToListAsync();
                 return Ok(entregas);
             }
             catch (Exception ex)
@@ -34,7 +34,7 @@ namespace TDS.Controllers
         {
             try
             {
-                var entrega = await _context.Entregas.Where(x => x.Estado == true && x.TareaId == TareaId && x.Id == id).AsNoTracking().FirstOrDefaultAsync();
+                var entrega = await _context.Entregas.Where(x => x.Estado == true && x.TareaId == TareaId && x.Id == id).Include(t => t.Estudiante).Include(t => t.Tarea).AsNoTracking().FirstOrDefaultAsync();
                 if (entrega == null)
                 {
                     return NotFound("No existe esa entrega");
@@ -48,7 +48,7 @@ namespace TDS.Controllers
         }
 
         [HttpPost("InsertEntrega")]
-        public async Task<IActionResult> InsertTarea([FromBody] Entrega entrega)
+        public async Task<IActionResult> InsertEntrega([FromBody] Entrega entrega)
         {
             try
             {
@@ -57,7 +57,11 @@ namespace TDS.Controllers
                 {
                     return BadRequest($"El estudiante ya entrego esta tarea");
                 }
+                entrega.Estudiante = null;
+                entrega.Tarea = null;
                 entrega.Estado = true;
+                entrega.Estudiante = null;
+                entrega.Tarea = null;
                 await _context.Entregas.AddAsync(entrega);
                 await _context.SaveChangesAsync();
                 return Ok(entrega);
@@ -78,6 +82,8 @@ namespace TDS.Controllers
                 {
                     return BadRequest($"Asegurese de que sea una entrega valida");
                 }
+                entrega.Estudiante = null;
+                entrega.Tarea = null;
                 oldEntrega.Documento = entrega.Documento;
                 oldEntrega.EstudianteId = entrega.EstudianteId;
                 oldEntrega.TareaId = entrega.TareaId;

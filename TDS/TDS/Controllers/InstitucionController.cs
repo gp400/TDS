@@ -116,16 +116,16 @@ namespace TDS.Controllers
         }
         
         [HttpPut("AgregarLicencias")]
-        public async Task<IActionResult> AgregarLicencias(int id, int cantidad)
+        public async Task<IActionResult> AgregarLicencias([FromBody] AddLicencias addLicencias)
         {
             try
             {
-                var oldInstitucion = await _context.Institucions.FirstOrDefaultAsync(x => x.Id == id && x.Estado == true);
+                var oldInstitucion = await _context.Institucions.FirstOrDefaultAsync(x => x.Id == addLicencias.Id && x.Estado == true);
                 if (oldInstitucion == null)
                 {
                     return BadRequest($"Asegurese de que sea una institucion valida");
                 }
-                oldInstitucion.Licencias += cantidad;
+                oldInstitucion.Licencias += addLicencias.Cantidad;
                 await _context.SaveChangesAsync();
                 return Ok(oldInstitucion);
             }
@@ -154,5 +154,11 @@ namespace TDS.Controllers
                 return BadRequest(ex.Message);
             }
         }
+    }
+
+    public class AddLicencias
+    {
+        public int Id { get; set; }
+        public int Cantidad { get; set; }
     }
 }

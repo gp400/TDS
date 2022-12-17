@@ -55,6 +55,7 @@ namespace TDS.Controllers
             try
             {
                 usuario.Estado = true;
+                usuario.Institucion = null;
                 usuario.Password = this.HashPassword(usuario.Password);
                 await _context.Usuarios.AddAsync(usuario);
                 await _context.SaveChangesAsync();
@@ -77,6 +78,7 @@ namespace TDS.Controllers
                     return BadRequest($"Asegurese de que sea un usuario valido");
                 }
                 oldUsuario.Estado = true;
+                usuario.Institucion = null;
                 oldUsuario.Password = this.HashPassword(usuario.Password);
                 oldUsuario.EstudianteId = usuario.EstudianteId;
                 oldUsuario.MaestroId = usuario.MaestroId;
