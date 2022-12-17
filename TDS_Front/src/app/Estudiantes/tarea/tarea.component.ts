@@ -7,7 +7,6 @@ import { APIService } from 'src/app/services/api.service';
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../../firebase/provider";
 import Swal from 'sweetalert2';
-import { setTimeout } from 'timers';
 
 @Component({
   selector: 'app-tarea',
@@ -17,19 +16,22 @@ import { setTimeout } from 'timers';
 export class TareaComponent implements OnInit {
 
   tareas: Tarea[] = [];
+  entregas: Entrega[] = [];
   titulo: string = "";
   descripcion: string = "";
   tareaId: number = 0;
   url: string = "";
+  entregasBool: boolean = false;
   @ViewChild('cerrar') btnCerrar!: ElementRef;
   constructor(private API: APIService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     let id = parseInt(this.route.snapshot.paramMap.get("id") || "0");
+    let user: Usuario = JSON.parse(localStorage.getItem("usuario")||"") as Usuario;
     if (id == 0){
-      let user: Usuario = JSON.parse(localStorage.getItem("usuario")||"") as Usuario;
       this.API.getEstudianteById(user.estudianteId || 0).subscribe( data => {
         const entregasId = data.entregas.map(e => e.tareaId);
+        this.entregas = data.entregas;
         data.estudiantesClases.forEach(ec => {
           ec.clase.tareas.forEach(t => {
             if (!entregasId.includes(t.id)){
@@ -41,18 +43,33 @@ export class TareaComponent implements OnInit {
         })
       });
     } else {
-      this.API.getClaseById(id).subscribe(clase => {
-        clase.tareas.forEach(t => {
-          let fecha = new Date(t.fechaEntrega)
-          t.fechaEntrega = `${fecha.getDate()}/${fecha.getMonth()+1}/${fecha.getFullYear()}`;
-          this.tareas.push(t);
+      this.entregasBool = true;
+      this.API.getEstudianteById(user.estudianteId || 0).subscribe( data => {
+        const entregasId = data.entregas.map(e => e.tareaId);
+        this.API.getClaseById(id).subscribe(clase => {
+          data.entregas.forEach(e => {
+            if (e.tarea?.idClase == clase.id){
+              this.entregas.push(e);
+            }
+          })
+          clase.tareas.forEach(t => {
+            if (!entregasId.includes(t.id)){
+              let fecha = new Date(t.fechaEntrega)
+              t.fechaEntrega = `${fecha.getDate()}/${fecha.getMonth()+1}/${fecha.getFullYear()}`;
+              this.tareas.push(t);
+            }
+          })
         })
-      })
+      });
     }
   }
 
   getSortedList(){
-    return this.tareas.sort((a, b) => (new Date(a.fechaEntrega) > new Date(b.fechaEntrega)) ? 1 : -1);
+    return this.tareas.sort((a, b) => {
+      let [dia1, mes1, year1] = a.fechaEntrega.split("/");
+      let [dia2, mes2, year2] = b.fechaEntrega.split("/");
+      return (new Date(`${mes1}/${dia1}/${year1}`) > new Date(`${mes2}/${dia2}/${year2}`)) ? 1 : -1
+    });
   }
 
   isValidDate(fecha: string){
@@ -100,26 +117,19 @@ export class TareaComponent implements OnInit {
           'success'
         )
       }, error => {
+        console.log(error);
         Swal.fire(
           'Error',
-          error.error,
+          error.message,
           'error'
         )
       })
       this.tareas = [];
       this.btnCerrar.nativeElement.click();
-      this.API.getEstudianteById(user.estudianteId || 0).subscribe( data => {
-        const entregasId = data.entregas.map(e => e.tareaId);
-        data.estudiantesClases.forEach(ec => {
-          ec.clase.tareas.forEach(t => {
-            if (!entregasId.includes(t.id)){
-              let fecha = new Date(t.fechaEntrega)
-              t.fechaEntrega = `${fecha.getDate()}/${fecha.getMonth()+1}/${fecha.getFullYear()}`;
-              this.tareas.push(t);
-            }
-          })
-        })
-      });
-    }
+      setTimeout(() => {
+        this.ngOnInit();
+      }, 500)
+      this.url = "";
+      }
   }
 }

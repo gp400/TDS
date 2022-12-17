@@ -8,6 +8,7 @@
           <div class="card-body">
             <h4 class="card-title">{{tarea.titulo}}</h4>
             <p style="margin-top: 16px;"><strong>Fecha Entrega: </strong>{{tarea.fechaEntrega}}</p>
+            <p class="card-text"><strong>Valor:</strong> {{tarea.calificacion}}</p>
             <p class="card-text">{{tarea.descripcion}}</p>
             <button (click)="setModal(tarea.titulo, tarea.descripcion, tarea.id)" [disabled]="isValidDate(tarea.fechaEntrega)" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#agregartarea">Entregar</button>
           </div>
@@ -33,4 +34,21 @@
       </div>
     </ng-template>
   </div>
+  <ng-template [ngIf]="entregasBool">
+    <h1 class="text-center my-3">Entregas</h1>
+    <div class="row g-3 mb-3">
+      <ng-template ngFor let-entrega [ngForOf]="entregas">
+        <div class="col-4">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">{{entrega.tarea?.titulo}}</h4>
+              <p><strong>Calificacion: </strong>{{entrega.calificacion}}/{{entrega.tarea?.calificacion}}</p>
+              <div class="mt-2">
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+  </ng-template>
 </main>

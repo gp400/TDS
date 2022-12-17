@@ -8,6 +8,7 @@
           <div class="card-body">
             <h5 class="card-title">{{ec.clase.nombre}}</h5>
             <p class="card-text">{{ec.clase.descripcion}}</p>
+            <p><strong>Acumulado:</strong> {{getAcumulado(ec.claseId)?.acumulado}}/{{getAcumulado(ec.claseId)?.total}}</p>
             <a routerLink="/estudianteUser/tarea/{{ec.clase.id}}" class="btn btn-primary">Visitar</a>
           </div>
         </div>
