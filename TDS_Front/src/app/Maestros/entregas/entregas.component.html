@@ -1,0 +1,41 @@
+<app-navbar-user></app-navbar-user>
+<main class="container">
+  <h1 class="text-center my-3">Entregas</h1>
+  <button (click)="back()" type="button" class="btn btn-primary my-3" data-bs-toggle="modal" data-bs-target="#tareasModal">Volver</button>
+  <div class="row g-3 mb-3">
+    <ng-template ngFor let-entrega [ngForOf]="entregas">
+      <div class="col-4">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">{{entrega.estudiante?.nombres}} {{entrega.estudiante?.apellidos}}</h4>
+            <p><strong>Calificacion: </strong>{{entrega.calificacion}}/{{entrega.tarea?.calificacion}}</p>
+            <div class="mt-2">
+              <button (click)="getFile(entrega)" class="btn btn-primary">Ver archivo</button><br/>
+              <button (click)="setEntrega(entrega)" class="btn btn-success mt-1" data-bs-toggle="modal" data-bs-target="#exampleModal">Calificar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">{{entrega.estudiante?.nombres}} {{entrega.estudiante?.apellidos}}</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="calificacion" class="form-label">Calificacion</label>
+              <input type="number" [(ngModel)]="entrega.calificacion" min="0" class="form-control" id="calificacion">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" #btnCerrar>Cerrar</button>
+            <button type="button" (click)="onSubmit()" class="btn btn-primary">Calificar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

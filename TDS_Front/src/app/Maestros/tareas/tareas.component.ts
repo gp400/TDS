@@ -65,7 +65,8 @@ export class TareasComponent implements OnInit {
 
   onSubmit(){
     if (this.tarea.titulo.trim().length == 0 || this.tarea.descripcion.trim().length == 0
-    ||  this.tarea.fechaEntrega.trim().length == 0 || this.tarea.codigo.trim().length == 0){
+    ||  this.tarea.fechaEntrega.trim().length == 0 || this.tarea.codigo.trim().length == 0
+    || this.tarea.calificacion <= 0){
       Swal.fire({
         title: "Alerta",
         text: 'Todos los campos son requeridos',

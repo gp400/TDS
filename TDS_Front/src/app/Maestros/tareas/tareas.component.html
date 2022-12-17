@@ -3,7 +3,7 @@
   <h1 class="text-center my-3">Tareas</h1>
   <button (click)="setTarea(0)" type="button" class="btn btn-primary my-3" data-bs-toggle="modal" data-bs-target="#tareasModal">Agregar Tarea</button>
   <div class="modal fade" id="tareasModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="tareasModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-header">
           <h1 class="modal-title fs-5" id="tareasModalLabel">{{title}}</h1>
@@ -27,6 +27,10 @@
               <label for="codigo" class="form-label">Codigo</label>
               <input type="text" [(ngModel)]="tarea.codigo" name="codigo" class="form-control" id="codigo">
             </div>
+            <div class="mb-3">
+              <label for="calificacion" class="form-label">Calificacion</label>
+              <input type="number" [(ngModel)]="tarea.calificacion" name="calificacion" class="form-control" id="calificacion">
+            </div>
           </form>
         </div>
         <div class="modal-footer">
@@ -43,10 +47,12 @@
           <div class="card-body">
             <h4 class="card-title">{{tarea.titulo}}</h4>
             <p style="margin-top: 16px;"><strong>Fecha Entrega: </strong>{{tarea.fechaEntrega}}</p>
-            <p class="card-text">{{tarea.descripcion}}</p>
+            <p class="card-text"><strong>Calificacion: </strong>{{tarea.calificacion}}</p>
+            <p class="card-text"><strong>Descripcion: </strong>{{tarea.descripcion}}</p>
             <div class="my-3">
               <button (click)="setTarea(tarea.id)" type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#tareasModal">Editar</button>
-              <button (click)="onDelete(tarea.id)" type="button" class="btn btn-danger ms-1">Eliminar</button>
+              <button (click)="onDelete(tarea.id)" type="button" class="btn btn-danger mx-1">Eliminar</button>
+              <a href="maestroUser/clases/entregas/{{clase.id}}/{{tarea.id}}" class="btn btn-success">Entregas</a>
             </div>
           </div>
         </div>

@@ -38,6 +38,10 @@ export class APIService {
     return this.http.post<Institucion>("https://localhost:7082/Institucion/InsertInstitucion", institucion);
   }
 
+  public agregarLicencias(cantidad: number){
+    return this.http.put<Institucion>("https://localhost:7082/Institucion/AgregarLicencias", {id: this.getInstitucionId(), cantidad})
+  }
+
   public getMaestros(){
     return this.http.get<Maestro[]>(`https://localhost:7082/Maestro/GetMaestros/${this.getInstitucionId()}`);
   }
@@ -94,6 +98,10 @@ export class APIService {
     return this.http.get<Clase[]>(`https://localhost:7082/Clase/GetClasesByMaestroId/${this.getInstitucionId()}/${this.getMaestroId()}`);
   }
 
+  public getAcumulado(idClase: number){
+    return this.http.get<{idClase: number, total: number, acumulado: number}>(`https://localhost:7082/Clase/GetAcumulado/${idClase}/${this.getEstudianteId()}`);
+  }
+
   public insertClase(clase: Clase){
     clase.institucionId = this.getInstitucionId();
     return this.http.post<Clase>(`https://localhost:7082/Clase/InsertClase`, clase);
@@ -128,6 +136,22 @@ export class APIService {
     return this.http.delete<Tarea>(`https://localhost:7082/Tarea/DeleteTarea/${idClase}/${id}`)
   }
 
+  public getEntregas(idTarea: number){
+    return this.http.get<Entrega[]>(`https://localhost:7082/Entrega/GetEntregas/${idTarea}`)
+  }
+
+  public insertEntrega(entrega: Entrega){
+    entrega.estudianteId = this.getEstudianteId();
+    entrega.estado = true;
+    entrega.tarea = null;
+    entrega.estudiante = null;
+    return this.http.post<Entrega>(`https://localhost:7082/Entrega/InsertEntrega`, entrega);
+  }
+
+  public updateEntrega(entrega: Entrega){
+    return this,this.http.put<Entrega>(`https://localhost:7082/Entrega/UpdateEntrega`, entrega);
+  }
+
   public login(correo: string, password: string){
     return this.http.get<Usuario>(`https://localhost:7082/Usuario/Login/${correo}/${password}`);
   }
@@ -156,11 +180,5 @@ export class APIService {
 
   public deleteUsuario(id: number){
     return this.http.delete<Usuario>(`https://localhost:7082/Usuario/DeleteUsuario/${this.getInstitucionId()}/${id}`);
-  }
-
-  public insertEntrega(entrega: Entrega){
-    entrega.estudianteId = this.getEstudianteId();
-    entrega.estado = true;
-    return this.http.post<Entrega>(`https://localhost:7082/Entrega/InsertEntrega`, entrega);
   }
 }

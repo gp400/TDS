@@ -7,7 +7,30 @@
         <div class="card-body">
           <h5 class="card-title">Comprar Licencias ({{licencias}})</h5>
           <p class="card-text">Compre licencias para crear maestros y estudiantes</p>
-          <a routerLink="/institucion" class="btn btn-success">Comprar Licencias</a>
+          <button type="button" data-bs-toggle="modal" data-bs-target="#modal" class="btn btn-success">Comprar Licencias</button>
+          <div class="modal fade" id="modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">Comprar Licencias</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <div class="mb-3">
+                    <label for="cantidad" class="form-label">Cantidad de licencias</label>
+                    <input [(ngModel)]="cantidad" type="number" min="0" class="form-control" id="cantidad">
+                  </div>
+                  <div>
+                    <strong>Precio:</strong> {{cantidad * 1000}}
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button #btnCerrar type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                  <button (click)="pagar()" type="button" class="btn btn-primary">Pagar</button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
